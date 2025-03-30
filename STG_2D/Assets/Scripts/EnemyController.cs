@@ -26,6 +26,9 @@ public class EnemyController : MonoBehaviour
     // 태그 임시저장
     public string tagName;
 
+    // 점수
+    int score;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,8 @@ public class EnemyController : MonoBehaviour
             hp = 1;
 
         tagName = gameObject.tag;
+
+        score = 10;
 
         Move();
 
@@ -117,6 +122,10 @@ public class EnemyController : MonoBehaviour
     private void OnDead()
     {
         onDead = true;
+        if(gameObject.tag != "Untagged")
+        {
+            UIManager.Instance.ScoreAdd(score);
+        }
         gameObject.tag = "Untagged";
 
         // 스코어 증가 코드 작성 예정

@@ -8,11 +8,17 @@ public class PowerUpController : ItemController
 
     protected override void ItemGain()
     {
+        base.ItemGain();
+
         player = base.player.GetComponent<Player>();
 
         if(player.Damage < 3)
         {
             player.Damage++;
+        }
+        if(player.Damage >=3)
+        {
+            UIManager.Instance.ScoreAdd(base.score);
         }
 
     }
