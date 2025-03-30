@@ -13,13 +13,23 @@ public class Player : MonoBehaviour
     public Vector3 limltMin;
     Vector3 temp;
 
-    public GameObject prefaBullet;
+    public GameObject[] prefaBullet;
     float time;
     public float speed;
 
     float fireDealay;
     Animator animator;
     bool onDead;
+
+    // 아이템
+
+    public int Damage;
+    public int Boom;
+
+    //폭탄
+    public GameObject BoomMissile;
+    public int BoomPosY;
+    public int BoomDamage;
 
     private void Start()
     {
@@ -29,6 +39,12 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();    
         onDead = false;
+
+        Damage = 1;
+        Boom = 0;
+
+        BoomPosY = -30;
+        BoomDamage = 30;
     }
   
     // Update is called once per frame 
@@ -39,6 +55,7 @@ public class Player : MonoBehaviour
         Move();
         FireBullet();
         onDeadCheck();
+        FireBoom();
     }
 
     public void Move()
@@ -78,14 +95,29 @@ public class Player : MonoBehaviour
     public void FireBullet()
     {
         fireDealay += Time.deltaTime;
-        Debug.Log("Fire" + fireDealay);
+       // Debug.Log("Fire" + fireDealay);
         if(fireDealay > 0.3f)
         {
-            Instantiate(prefaBullet, transform.position, Quaternion.identity);
+            Instantiate(prefaBullet[Damage-1], transform.position, Quaternion.identity);
             fireDealay -= 0.3f;
         }
     }
 
+    public void FireBoom()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space!!");
+
+            if(Boom>=1)
+            {
+                GameObject go = Instantiate(BoomMissile,transform.position, Quaternion.identity);
+                go.transform.position = new Vector3(transform.position.x,BoomPosY,transform.position.z);  
+                Boom--;
+                UIManager.Instance.BoomCheck(Boom); 
+            }
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
