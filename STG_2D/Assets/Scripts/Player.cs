@@ -142,7 +142,17 @@ public class Player : MonoBehaviour
     {
         if(onDead)
         {
-            time += Time.deltaTime;
+            if(onDead)
+            {
+                if(SoundManager.instance.playerDeadSound.isPlaying == false)
+                {
+                    SoundManager.instance.playerDeadSound.Play();
+                }
+                time += Time.deltaTime;
+
+            }
+            
+
         }
         if(time > 0.6f)
         {
@@ -150,6 +160,7 @@ public class Player : MonoBehaviour
             GameManager.instance.PlayerLifeRemove();
             GameManager.instance.CreatePlayer();
             UIManager.Instance.LifeCheck(GameManager.instance.lifeCount);
+            GameManager.instance.GameOverCheck();
 
 
         }

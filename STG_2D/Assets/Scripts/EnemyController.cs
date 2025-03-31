@@ -125,6 +125,7 @@ public class EnemyController : MonoBehaviour
         if(gameObject.tag != "Untagged")
         {
             UIManager.Instance.ScoreAdd(score);
+            SoundManager.instance.enemyDeadSound.Play();
         }
         gameObject.tag = "Untagged";
 

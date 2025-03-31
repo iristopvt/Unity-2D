@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         CreatePlayer();
     }
 
+    // 플레이어 생성
     public void CreatePlayer()
     {
         if(lifeCount >=0)
@@ -47,13 +48,19 @@ public class GameManager : MonoBehaviour
         }    
     }
 
+    // 플레이어 라이프 감서
     public void PlayerLifeRemove()
     {
         lifeCount--;
     }
-    // Update is called once per frame
-    void Update()
+  
+    // 플레이어 라이프에 따른 게임오버 확인
+
+    public void GameOverCheck()
     {
-        
+        if(lifeCount < 0)
+        {
+            UIManager.Instance.GameOver();
+        }
     }
 }
